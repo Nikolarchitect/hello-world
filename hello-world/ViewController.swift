@@ -18,10 +18,28 @@ class ViewController: UIViewController {
         return button
     }()
     
+    @objc private func buttonTapped() {
+        button.addAction(
+            UIAction(
+                handler: { [weak self] _ in
+                    let alert = self?.createAlert() ?? UIAlertController()
+                    self?.present(
+                        alert,
+                        animated: true,
+                        completion: nil)
+                }),
+            for: .touchUpInside)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+        button.addTarget(
+            self,
+            action: #selector(buttonTapped),
+            for: .touchUpInside
+        )
     }
 
     private func setupViews() {
@@ -33,6 +51,20 @@ class ViewController: UIViewController {
         button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         button.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func createAlert() -> UIAlertController {
+        let alert = UIAlertController(
+            title: "Hello World!",
+            message: "Do you enjoy my first app?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(
+            title: "Yes",
+            style: .cancel,
+            handler: nil
+        ))
+        return alert
     }
 }
 
