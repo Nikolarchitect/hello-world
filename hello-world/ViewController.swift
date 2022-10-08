@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
 
@@ -14,7 +15,12 @@ class ViewController: UIViewController {
         button.backgroundColor = UIColor(red: 152/255, green: 103/255, blue: 197/255, alpha: 1)
         button.setTitle("Hello World!", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 20
+        button.snp.makeConstraints { make in
+            make.width.equalTo(150)
+            make.height.equalTo(50)
+        }
+        
         return button
     }()
     
@@ -48,9 +54,12 @@ class ViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         button.translatesAutoresizingMaskIntoConstraints = false
+
+        button.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
     }
     
     private func createAlert() -> UIAlertController {
